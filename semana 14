@@ -1,0 +1,121 @@
+#include <stdio.h>
+
+int main() {
+    char frase[1000];
+    char palabraActual[100];
+    char palabraMasGrande[100];
+    char palabraMasPequena[100];
+    int tamanoActual = 0, tamanoMasGrande = 0, tamanoMasPequena = 1000;
+    int numPalabras = 0;
+    int vocalesActual = 0, consonantesActual = 0;
+    int vocalesMasGrande = 0, consonantesMasGrande = 0;
+    int vocalesMasPequena = 0, consonantesMasPequena = 0;
+
+    while (1) {
+   
+        printf("Ingrese una frase (o escriba 'salir' para terminar): ");
+        fgets(frase, sizeof(frase), stdin);
+
+  
+        if (frase[0] != '\0' && frase[0] != '\n') {
+            int i = 0;
+            while (frase[i] != '\0') {
+                if (frase[i] == '\n') {
+                    frase[i] = '\0';
+                    break;
+                }
+                i++;
+            }
+        }
+
+        int salir = 1;
+        for (int i = 0; i < 5; i++) {
+            if (frase[i] != "salir"[i]) {
+                salir = 0;
+                break;
+            }
+        }
+        
+        if (salir) {
+            break;
+        }
+
+        tamanoActual = 0;
+        numPalabras = 0;
+        vocalesActual = 0;
+        consonantesActual = 0;
+       
+        for (int i = 0; i < 100; i++) {
+            palabraMasPequena[i] = ' ';
+        }
+        palabraMasPequena[99] = '\0';  
+
+        int i = 0, j = 0;
+        while (1) {
+            char c = frase[i];
+
+           
+            if (c != ' ' && c != '\0' && c != '\n') {
+                palabraActual[j++] = c;
+                
+                if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ||
+                    c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U') {
+                    vocalesActual++;
+                } else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+                    consonantesActual++;
+                }
+            } else {
+                
+                if (j > 0) {
+                    palabraActual[j] = '\0'; 
+                    tamanoActual = j;
+                    numPalabras++;
+
+                    if (tamanoActual > tamanoMasGrande) {
+                        tamanoMasGrande = tamanoActual;
+                        
+                        for (int k = 0; k < tamanoActual; k++) {
+                            palabraMasGrande[k] = palabraActual[k];
+                        }
+                        palabraMasGrande[tamanoActual] = '\0'; 
+                        vocalesMasGrande = vocalesActual;
+                        consonantesMasGrande = consonantesActual;
+                    }
+
+                   
+                    if (tamanoActual < tamanoMasPequena) {
+                        tamanoMasPequena = tamanoActual;
+                        
+                        for (int k = 0; k < tamanoActual; k++) {
+                            palabraMasPequena[k] = palabraActual[k];
+                        }
+                        palabraMasPequena[tamanoActual] = '\0';  
+                        vocalesMasPequena = vocalesActual;
+                        consonantesMasPequena = consonantesActual;
+                    }
+
+                   
+                    j = 0;
+                    vocalesActual = 0;
+                    consonantesActual = 0;
+                }
+
+             
+                if (c == '\0') {
+                    break;
+                }
+            }
+
+            i++;
+        }
+
+        printf("Número de palabras: %d\n", numPalabras);
+        printf("Palabra más pequeña: %s -> Consonantes: %d, Vocales: %d\n",
+               palabraMasPequena, consonantesMasPequena, vocalesMasPequena);
+        printf("Palabra más grande: %s -> Consonantes: %d, Vocales: %d\n",
+               palabraMasGrande, consonantesMasGrande, vocalesMasGrande);
+    }
+
+    printf("Programa terminado. ¡Adiós!\n");
+    return 0;
+}
