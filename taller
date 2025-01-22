@@ -1,0 +1,45 @@
+#include <stdio.h>
+ 
+int main() {
+    float tarifaPorHora = 2.50; // Tarifa por hora o fracción
+    float tiempo, totalAPagar, pago, cambio;
+    int opcion;
+ 
+    do {
+        printf("\n--- Calculadora de Tarifas de Estacionamiento ---\n");
+        printf("1. Calcular tarifa\n");
+        printf("2. Salir\n");
+        printf("Seleccione una opcion: ");
+        scanf("%d", &opcion);
+ 
+        switch (opcion) {
+            case 1:
+                printf("Ingrese el tiempo de estancia en horas: ");
+                scanf("%f", &tiempo);
+ 
+                totalAPagar = tiempo * tarifaPorHora;
+                printf("Tarifa a pagar: $%.2f\n", totalAPagar);
+ 
+                printf("Ingrese el pago del cliente: ");
+                scanf("%f", &pago);
+ 
+                if (pago < totalAPagar) {
+                    printf("El pago es insuficiente.\n");
+                } else {
+                    cambio = pago - totalAPagar;
+                    printf("Cambio a devolver: $%.2f\n", cambio);
+                }
+                break;
+ 
+            case 2:
+                printf("Saliendo del sistema...\n");
+                break;
+ 
+            default:
+                printf("Opción inválida. Intente de nuevo.\n");
+        }
+ 
+    } while (opcion != 2);
+ 
+    return 0;
+}
